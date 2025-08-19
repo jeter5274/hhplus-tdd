@@ -7,9 +7,19 @@ import java.util.List;
 
 public class PointService {
 
-    UserPointTable userPointTable;
+    private final UserPointTable userPointTable;
 
-    PointHistoryTable pointHistoryTable;
+    private final PointHistoryTable pointHistoryTable;
+
+    /**
+     * TDD 생성자 <br>
+     *
+     * @param userPointTable
+     */
+    public PointService(UserPointTable userPointTable){
+        pointHistoryTable = null;
+        this.userPointTable = userPointTable;
+    }
 
     /**
      * 사용자 포인트 조회 <br>
