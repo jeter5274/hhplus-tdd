@@ -21,6 +21,11 @@ public class PointService {
         this.userPointTable = userPointTable;
     }
 
+    public PointService(PointHistoryTable pointHistoryTable){
+        this.pointHistoryTable = pointHistoryTable;
+        userPointTable = null;
+    }
+
     /**
      * 사용자 포인트 조회 <br>
      * @param userId
