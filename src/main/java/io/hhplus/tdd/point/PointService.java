@@ -14,8 +14,13 @@ public class PointService {
     /**
      * TDD 생성자 <br>
      *
+     * @param pointHistoryTable
      * @param userPointTable
      */
+    public PointService(PointHistoryTable pointHistoryTable, UserPointTable userPointTable){
+        this.pointHistoryTable = pointHistoryTable;
+        this.userPointTable = userPointTable;
+    }
     public PointService(UserPointTable userPointTable){
         pointHistoryTable = null;
         this.userPointTable = userPointTable;
