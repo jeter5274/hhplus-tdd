@@ -63,4 +63,24 @@ class PointServiceTest {
         verify(mockUserPointTable, times(1)).insertOrUpdate(userId, point+amount);
     }
 
+    @Test
+    @DisplayName("사용자 포인트 충전 시 포인트 충전 내역 테스트")
+    void setUserPoint_charge_Hist_mock() {
+        long userId = 1L;
+        long point = 10;
+        long amount = 10;
+        long updateMillis = System.currentTimeMillis();
+
+        PointHistoryTable mockPointHistoryTable = mock(PointHistoryTable.class);
+        UserPointTable mockUserPointTable = mock(UserPointTable.class);
+        PointService pointService = new PointService(mockPointHistoryTable, mockUserPointTable);
+        when(mockUserPointTable.selectById(userId)).thenReturn(new UserPoint(userId, point, updateMillis));
+        when(mockUserPointTable.insertOrUpdate(userId, point+amount)).thenReturn(new UserPoint(userId, point+amount, updateMillis));
+        when(mockPointHistoryTable.insert(userId,amount, TransactionType.CHARGE, updateMillis)).thenReturn(new PointHistory(userId, userId, amount, TransactionType.CHARGE, updateMillis));
+
+        UserPoint result = pointService.setUserPoint(userId, amount, TransactionType.CHARGE);
+
+        verify(mockPointHistoryTable, times(1)).insert(userId,amount, TransactionType.CHARGE, updateMillis);
+    }
+
 }
