@@ -44,7 +44,8 @@ public class PointController {
             @PathVariable long id,
             @RequestBody long amount
     ) {
-        return new UserPoint(0, 0, 0);
+        UserPoint userPoint = pointService.setUserPoint(id, amount, TransactionType.CHARGE);
+        return new UserPoint(userPoint.id(), userPoint.point(), userPoint.updateMillis());
     }
 
     /**
@@ -55,6 +56,7 @@ public class PointController {
             @PathVariable long id,
             @RequestBody long amount
     ) {
-        return new UserPoint(0, 0, 0);
+        UserPoint userPoint = pointService.setUserPoint(id, amount, TransactionType.USE);
+        return new UserPoint(userPoint.id(), userPoint.point(), userPoint.updateMillis());
     }
 }
