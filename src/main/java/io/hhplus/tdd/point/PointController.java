@@ -12,6 +12,8 @@ public class PointController {
 
     private static final Logger log = LoggerFactory.getLogger(PointController.class);
 
+    PointService pointService;
+
     /**
      * TODO - 특정 유저의 포인트를 조회하는 기능을 작성해주세요.
      */
@@ -19,7 +21,8 @@ public class PointController {
     public UserPoint point(
             @PathVariable long id
     ) {
-        return new UserPoint(0, 0, 0);
+        UserPoint userPoint = pointService.getUserPoint(id);
+        return new UserPoint(userPoint.id(), userPoint.point(), userPoint.updateMillis());
     }
 
     /**
@@ -29,7 +32,8 @@ public class PointController {
     public List<PointHistory> history(
             @PathVariable long id
     ) {
-        return List.of();
+        return pointService.getUserPointHistoryList(id);
+        //return List.of();
     }
 
     /**
@@ -40,7 +44,8 @@ public class PointController {
             @PathVariable long id,
             @RequestBody long amount
     ) {
-        return new UserPoint(0, 0, 0);
+        UserPoint userPoint = pointService.setUserPoint(id, amount, TransactionType.CHARGE);
+        return new UserPoint(userPoint.id(), userPoint.point(), userPoint.updateMillis());
     }
 
     /**
@@ -51,6 +56,7 @@ public class PointController {
             @PathVariable long id,
             @RequestBody long amount
     ) {
-        return new UserPoint(0, 0, 0);
+        UserPoint userPoint = pointService.setUserPoint(id, amount, TransactionType.USE);
+        return new UserPoint(userPoint.id(), userPoint.point(), userPoint.updateMillis());
     }
 }
